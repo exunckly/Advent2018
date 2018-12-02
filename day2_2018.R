@@ -38,9 +38,9 @@ day2_data_t <- as.tibble(matrix(unlist(day2_data_split), ncol = length(day2_data
 
 part1 <- my_checksum(day2_data_t)
 
-# Parrt 2
+# Part 2
 # Now we need to compare all possible combinations of pairs of strings for differences
-# Stick with strings this time instead of splitting into characters
+
 my_comb <- (combn(day2_data, 2))
 my_comb_t <- as.tibble(t(my_comb)) # t is base r for transpose
 my_comb_t$split1 <- strsplit(my_comb_t$V1, split = "")
@@ -63,8 +63,7 @@ for (j in seq_along(my_row$split1[1][[1]])){
   my_locations[j] <- my_row$split1[1][[1]][j] == my_row$split2[1][[1]][j] # Repeated code - should be a function
 }
 
-banana <- my_row$split1[1][[1]][my_locations]
-part2 <- paste(banana, collapse = "")
+part2 <- paste(my_row$split1[1][[1]][my_locations], collapse = "")
 part2
 
 
