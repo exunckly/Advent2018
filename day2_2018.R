@@ -40,6 +40,7 @@ part1 <- my_checksum(day2_data_t)
 
 # Part 2
 # Now we need to compare all possible combinations of pairs of strings for differences
+# This is pretty messy for now
 
 my_comb <- (combn(day2_data, 2))
 my_comb_t <- as.tibble(t(my_comb)) # t is base r for transpose
@@ -52,18 +53,13 @@ for (i in seq_along(my_comb_t$V1)){
     myval[j] <- my_comb_t$split1[i][[1]][j] == my_comb_t$split2[i][[1]][j]
   }
   my_comb_t$diff[i] <- length(my_comb_t$split1[i][[1]]) - sum(myval)
+  my_comb_t$test[i] <- list(myval)
 }
 
 my_row <- my_comb_t %>%
   filter(diff == 1)
 
-my_locations <- vector(mode = "logical", length = length(myval))
-
-for (j in seq_along(my_row$split1[1][[1]])){
-  my_locations[j] <- my_row$split1[1][[1]][j] == my_row$split2[1][[1]][j] # Repeated code - should be a function
-}
-
-part2 <- paste(my_row$split1[1][[1]][my_locations], collapse = "")
+part2 <- paste(my_row$split1[1][[1]][my_row$test[[1]][1]], collapse = "")
 part2
 
 
