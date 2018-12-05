@@ -1,11 +1,11 @@
 # Advent of code 2018 day 5
 # https://adventofcode.com/2018/day/5
 
-# Create pairs of patterns for part 2
-my_pairs <- paste(LETTERS,letters, sep = "|")
-
 # Create main search pattern
 pattern <- paste(c(paste0(LETTERS,letters), paste0(letters,LETTERS)), collapse="|")
+
+# Create pairs of patterns for part 2
+my_pairs <- paste(LETTERS,letters, sep = "|")
 
 # Load input
 d5 <- readLines("input/day5_input.txt")
@@ -31,8 +31,8 @@ part1 <- nchar(remove_units(d5, pattern))
 # Part 2
 atoz_results <- vector(mode = "numeric", length = length(my_pairs))
 for(i in seq_along(my_pairs)){
-  test <- remove_units(gsub(my_pairs[i], "", d5), pattern)
-  print(i)
+  atoz_results[i] <- nchar(remove_units(gsub(my_pairs[i], "", d5), pattern)) # To avoid storing silly long strings
+  print(letters[i])
 }
 
 part2 <- min(atoz_results)
