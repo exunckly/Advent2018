@@ -51,17 +51,21 @@ my_locs <- left_join(my_locs, select(d6, loc_name, infinite), by = c("nearest" =
   unique()
 
 # Calculate the largest area for finite regions
-largest_area <- my_locs %>%
+part1 <- largest_area <- my_locs %>%
   filter (infinite == FALSE, !(is.na(nearest))) %>%
   group_by(nearest) %>%
-  count()
+  count() %>%
+  arrange(desc(n)) %>%
+  pull(nearest) %>%
+  first
 
-part1 <- max(largest_area$n)
 part1
 
 # Part 2 - already calculated total distance ot all letters in the loop up there
 part2 <- my_locs %>%
   count(flag = total_dist < max_safe) %>%
-  filter(flag == TRUE)
+  filter(flag == TRUE) %>%
+  pull(n) %>%
+  first
 
-part2$n[1]
+part2
